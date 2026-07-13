@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { describe, expect, it } from "vitest";
 
-import { routes } from "./router/router";
+import { routes } from "./router";
 
 function renderWithRouter(path) {
 	const router = createMemoryRouter(routes, {

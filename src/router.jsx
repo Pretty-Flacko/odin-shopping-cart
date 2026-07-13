@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router";
 
-import App from "../App";
+import App from "./App";
 
-import Home from "../pages/Home/Home";
-import Shop from "../pages/Shop/Shop";
-import Cart from "../pages/Cart/Cart";
+import Home from "./pages/Home/Home";
+import Shop from "./pages/Shop/Shop";
+import Cart from "./pages/Cart/Cart";
 
-import testProducts from "../pages/Shop/Shop.test-data";
+import testProducts from "./pages/Shop/Shop.test-data";
 
 export const routes = [
 	{
