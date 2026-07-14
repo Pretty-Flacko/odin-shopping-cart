@@ -19,7 +19,7 @@ function CartTestComponent() {
 }
 
 describe("Cart", () => {
-	it("show empty cart message when cart is empty", () => {
+	it("shows an empty cart message when the cart is empty", () => {
 		render(
 			<CartProvider>
 				<Cart />
@@ -47,5 +47,24 @@ describe("Cart", () => {
 
 		expect(screen.getByText("Backpack")).toBeInTheDocument();
 		expect(screen.getByText("Quantity: 2")).toBeInTheDocument();
+	});
+
+	it("shows cart total", async () => {
+		const user = userEvent.setup();
+
+		render(
+			<CartProvider>
+				<Cart />
+				<CartTestComponent />
+			</CartProvider>,
+		);
+
+		await user.click(
+			screen.getByRole("button", {
+				name: "Add",
+			}),
+		);
+
+		expect(screen.getByText("Total: $59.98")).toBeInTheDocument();
 	});
 });

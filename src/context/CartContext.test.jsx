@@ -84,6 +84,18 @@ function CartCountTestComponent() {
 	);
 }
 
+function CartTotalTestComponent() {
+	const { cartTotal, addToCart } = useCart();
+
+	return (
+		<>
+			<p>Total: {cartTotal}</p>
+
+			<button onClick={() => addToCart(product, 3)}>Add</button>
+		</>
+	);
+}
+
 describe("CartContext", () => {
 	it("starts with an empty cart", () => {
 		render(
@@ -198,5 +210,21 @@ describe("CartContext", () => {
 		await user.click(screen.getByRole("button", { name: "Add" }));
 
 		expect(screen.getByText("Count: 3")).toBeInTheDocument();
+	});
+
+	it("calculates total cart price", async () => {
+		const user = userEvent.setup();
+
+		render(
+			<CartProvider>
+				<CartTotalTestComponent />
+			</CartProvider>,
+		);
+
+		expect(screen.getByText("Total: 0")).toBeInTheDocument();
+
+		await user.click(screen.getByRole("button", { name: "Add" }));
+
+		expect(screen.getByText("Total: 89.97")).toBeInTheDocument();
 	});
 });

@@ -7,6 +7,11 @@ export function CartProvider({ children }) {
 
 	const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
+	const cartTotal = cart.reduce(
+		(total, item) => total + item.price * item.quantity,
+		0,
+	);
+
 	function addToCart(product, quantity) {
 		setCart((prevCart) => {
 			const existingProduct = prevCart.find((item) => item.id === product.id);
@@ -58,6 +63,7 @@ export function CartProvider({ children }) {
 			value={{
 				cart,
 				cartCount,
+				cartTotal,
 				addToCart,
 				updateQuantity,
 				removeFromCart,

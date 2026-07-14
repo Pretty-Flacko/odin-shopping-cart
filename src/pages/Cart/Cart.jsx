@@ -1,7 +1,8 @@
 import { useCart } from "../../context/CartContext";
+import CartItem from "../../components/CartItem/CartItem";
 
 function Cart() {
-	const { cart } = useCart();
+	const { cart, cartTotal } = useCart();
 
 	return (
 		<section>
@@ -10,14 +11,15 @@ function Cart() {
 			{cart.length === 0 ? (
 				<p>Your cart is empty</p>
 			) : (
-				<div>
-					{cart.map((item) => (
-						<div key={item.id}>
-							<p>{item.title}</p>
-							<p>Quantity: {item.quantity}</p>
-						</div>
-					))}
-				</div>
+				<>
+					<div>
+						{cart.map((item) => (
+							<CartItem key={item.id} item={item} />
+						))}
+					</div>
+
+					<p>Total: ${cartTotal.toFixed(2)}</p>
+				</>
 			)}
 		</section>
 	);
