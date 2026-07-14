@@ -37,7 +37,7 @@ describe("QuantitySelector", () => {
 		expect(handleIncrease).toHaveBeenCalled();
 	});
 
-	it("calls onDecrease when plus button is clicked", async () => {
+	it("calls onDecrease when minus button is clicked", async () => {
 		const user = userEvent.setup();
 		const handleDecrease = vi.fn();
 
