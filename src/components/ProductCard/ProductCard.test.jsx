@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import userEvent from "@testing-library/user-event";
 
+import { CartProvider, useCart } from "../../context/CartContext";
 import ProductCard from "./ProductCard";
 
 const product = {
@@ -11,9 +12,23 @@ const product = {
 	image: "test-image.jpg",
 };
 
+function CartTestComponent() {
+	const { cart } = useCart();
+
+	return (
+		<p>
+			{cart[0]?.title} - {cart[0]?.quantity}
+		</p>
+	);
+}
+
 describe("ProductCard", () => {
 	it("displays product information", () => {
-		render(<ProductCard product={product} onAddToCart={() => {}} />);
+		render(
+			<CartProvider>
+				<ProductCard product={product} />
+			</CartProvider>,
+		);
 
 		expect(
 			screen.getByRole("heading", {
@@ -31,16 +46,26 @@ describe("ProductCard", () => {
 	});
 
 	it("renders quantity selector", () => {
-		render(<ProductCard product={product} onAddToCart={() => {}} />);
+		render(
+			<CartProvider>
+				<ProductCard product={product} />
+			</CartProvider>,
+		);
 
 		expect(screen.getByRole("spinbutton")).toBeInTheDocument();
 	});
 
 	it("adds the selected quantity to the cart", async () => {
 		const user = userEvent.setup();
-		const handleAddToCart = vi.fn();
 
-		render(<ProductCard product={product} onAddToCart={handleAddToCart} />);
+		render(
+			<CartProvider>
+				<>
+					<ProductCard product={product} />
+					<CartTestComponent />
+				</>
+			</CartProvider>,
+		);
 
 		const input = screen.getByRole("spinbutton");
 
@@ -53,14 +78,20 @@ describe("ProductCard", () => {
 			}),
 		);
 
-		expect(handleAddToCart).toHaveBeenCalledWith(product, 3);
+		expect(screen.getByText("Test Product - 3")).toBeInTheDocument();
 	});
 
 	it("does not add to cart when quantity is invalid", async () => {
 		const user = userEvent.setup();
-		const handleAddToCart = vi.fn();
 
-		render(<ProductCard product={product} onAddToCart={handleAddToCart} />);
+		render(
+			<CartProvider>
+				<>
+					<ProductCard product={product} />
+					<CartTestComponent />
+				</>
+			</CartProvider>,
+		);
 
 		const input = screen.getByRole("spinbutton");
 
@@ -73,13 +104,17 @@ describe("ProductCard", () => {
 			}),
 		);
 
-		expect(handleAddToCart).not.toHaveBeenCalled();
+		expect(screen.queryByText("Test Product - 0")).not.toBeInTheDocument();
 	});
 
 	it("disables Add To Cart when quantity is invalid", async () => {
 		const user = userEvent.setup();
 
-		render(<ProductCard product={product} onAddToCart={() => {}} />);
+		render(
+			<CartProvider>
+				<ProductCard product={product} />
+			</CartProvider>,
+		);
 
 		const input = screen.getByRole("spinbutton");
 
@@ -94,7 +129,11 @@ describe("ProductCard", () => {
 	});
 
 	it("enables Add To Cart when quantity is valid", () => {
-		render(<ProductCard product={product} onAddToCart={() => {}} />);
+		render(
+			<CartProvider>
+				<ProductCard product={product} />
+			</CartProvider>,
+		);
 
 		expect(
 			screen.getByRole("button", {

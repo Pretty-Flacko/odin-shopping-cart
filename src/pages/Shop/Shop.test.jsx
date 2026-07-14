@@ -1,12 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, test } from "vitest";
+import { describe, expect, it } from "vitest";
 
+import { CartProvider } from "../../context/CartContext";
 import Shop from "./Shop";
 import testProducts from "./Shop.test-data";
 
 describe("Shop", () => {
 	it("renders the shop heading", () => {
-		render(<Shop products={testProducts} />);
+		render(
+			<CartProvider>
+				<Shop products={testProducts}></Shop>
+			</CartProvider>,
+		);
 
 		expect(
 			screen.getByRole("heading", {
@@ -16,13 +21,21 @@ describe("Shop", () => {
 	});
 
 	it("renders a product card for each product", () => {
-		render(<Shop products={testProducts} />);
+		render(
+			<CartProvider>
+				<Shop products={testProducts}></Shop>
+			</CartProvider>,
+		);
 
 		expect(screen.getAllByRole("article")).toHaveLength(3);
 	});
 
 	it("displays product information", () => {
-		render(<Shop products={testProducts} />);
+		render(
+			<CartProvider>
+				<Shop products={testProducts}></Shop>
+			</CartProvider>,
+		);
 
 		expect(
 			screen.getByRole("heading", {

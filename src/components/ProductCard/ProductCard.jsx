@@ -1,10 +1,12 @@
 import { useState } from "react";
 
-import styles from "./ProductCard.module.css";
-
+import { useCart } from "../../context/CartContext";
 import QuantitySelector from "../QuantitySelector/QuantitySelector";
 
-function ProductCard({ product, onAddToCart }) {
+import styles from "./ProductCard.module.css";
+
+function ProductCard({ product }) {
+	const { addToCart } = useCart();
 	const [quantity, setQuantity] = useState(1);
 
 	function handleIncrease() {
@@ -16,7 +18,7 @@ function ProductCard({ product, onAddToCart }) {
 	}
 
 	function handleAddToCart() {
-		onAddToCart(product, quantity);
+		addToCart(product, quantity);
 	}
 
 	return (

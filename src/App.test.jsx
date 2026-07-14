@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { describe, expect, it } from "vitest";
 
+import { CartProvider } from "./context/CartContext";
 import { routes } from "./router";
 
 function renderWithRouter(path) {
@@ -9,7 +10,11 @@ function renderWithRouter(path) {
 		initialEntries: [path],
 	});
 
-	return render(<RouterProvider router={router} />);
+	return render(
+		<CartProvider>
+			<RouterProvider router={router} />
+		</CartProvider>,
+	);
 }
 
 describe("App routes", () => {
