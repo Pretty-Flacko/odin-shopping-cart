@@ -1,6 +1,10 @@
 import { Link } from "react-router";
 
-function Navbar({ cartCount }) {
+import { useCart } from "../../context/CartContext";
+
+function Navbar() {
+	const { cartCount } = useCart();
+
 	return (
 		<nav>
 			<Link to="/">Home</Link>

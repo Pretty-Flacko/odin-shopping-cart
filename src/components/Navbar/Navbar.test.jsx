@@ -1,14 +1,31 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { MemoryRouter } from "react-router";
+import userEvent from "@testing-library/user-event";
 
+import { CartProvider, useCart } from "../../context/CartContext";
 import Navbar from "./Navbar";
+
+const product = {
+	id: 1,
+	title: "Test Product",
+	price: 10,
+	image: "image.jpg",
+};
+
+function CartCountTestComponent() {
+	const { addToCart } = useCart();
+
+	return <button onClick={() => addToCart(product, 3)}>Add</button>;
+}
 
 describe("Navbar", () => {
 	it("renders navigation links", () => {
 		render(
 			<MemoryRouter>
-				<Navbar cartCount={0} />
+				<CartProvider>
+					<Navbar />
+				</CartProvider>
 			</MemoryRouter>,
 		);
 
@@ -17,12 +34,19 @@ describe("Navbar", () => {
 		expect(screen.getByRole("link", { name: "Cart (0)" })).toBeInTheDocument();
 	});
 
-	it("displays the cart count", () => {
+	it("displays the cart count", async () => {
+		const user = userEvent.setup();
+
 		render(
 			<MemoryRouter>
-				<Navbar cartCount={3} />
+				<CartProvider>
+					<Navbar />
+					<CartCountTestComponent />
+				</CartProvider>
 			</MemoryRouter>,
 		);
+
+		await user.click(screen.getByRole("button", { name: "Add" }));
 
 		expect(screen.getByRole("link", { name: "Cart (3)" })).toBeInTheDocument();
 	});
@@ -30,7 +54,9 @@ describe("Navbar", () => {
 	it("links to the correct pages", () => {
 		render(
 			<MemoryRouter>
-				<Navbar cartCount={0} />
+				<CartProvider>
+					<Navbar />
+				</CartProvider>
 			</MemoryRouter>,
 		);
 
@@ -38,6 +64,7 @@ describe("Navbar", () => {
 			"href",
 			"/shop",
 		);
+
 		expect(screen.getByRole("link", { name: "Cart (0)" })).toHaveAttribute(
 			"href",
 			"/cart",
