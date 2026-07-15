@@ -30,7 +30,9 @@ describe("App routes", () => {
 	it("renders home page", () => {
 		renderWithRouter("/");
 
-		expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", { name: "Welcome to Shop" }),
+		).toBeInTheDocument();
 	});
 
 	it("renders shop page", async () => {

@@ -1,0 +1,42 @@
+.item {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+
+	padding: 1rem;
+
+	background-color: var(--primary);
+	border-radius: 0.75rem;
+}
+
+.image {
+	width: 100px;
+	height: 100px;
+
+	object-fit: contain;
+
+	background-color: white;
+	border-radius: 0.5rem;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	flex: 1;
+}
+
+.title {
+	margin: 0;
+	font-size: 1.1rem;
+}
+
+.price {
+	margin: 0;
+	font-weight: 700;
+}
+
+.quantity {
+	margin: 0;
+}

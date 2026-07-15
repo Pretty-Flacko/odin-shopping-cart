@@ -36,7 +36,12 @@ function ProductCard({ product }) {
 				onChange={setQuantity}
 			/>
 
-			<button type="button" disabled={quantity < 1} onClick={handleAddToCart}>
+			<button
+				className={styles.button}
+				type="button"
+				disabled={quantity < 1}
+				onClick={handleAddToCart}
+			>
 				Add To Cart
 			</button>
 		</article>

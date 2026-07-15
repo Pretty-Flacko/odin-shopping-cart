@@ -8,7 +8,7 @@ function Shop() {
 
 	return (
 		<section>
-			<h1>Shop</h1>
+			<h1 className={styles.title}>Shop</h1>
 
 			<div className={styles.products}>
 				{products.map((product) => (
