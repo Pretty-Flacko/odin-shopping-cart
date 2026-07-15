@@ -1,8 +1,11 @@
+import ProductCard from "../../components/ProductCard/ProductCard";
+import { useLoaderData } from "react-router";
+
 import styles from "./Shop.module.css";
 
-import ProductCard from "../../components/ProductCard/ProductCard";
+function Shop() {
+	const products = useLoaderData();
 
-function Shop({ products }) {
 	return (
 		<section>
 			<h1>Shop</h1>

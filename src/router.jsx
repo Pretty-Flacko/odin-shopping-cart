@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import Shop from "./pages/Shop/Shop";
 import Cart from "./pages/Cart/Cart";
 
+import { getProducts } from "./api/api";
 import testProducts from "./pages/Shop/Shop.test-data";
 
 export const routes = [
@@ -19,7 +20,8 @@ export const routes = [
 			},
 			{
 				path: "shop",
-				element: <Shop products={testProducts} />,
+				element: <Shop />,
+				loader: getProducts,
 			},
 			{
 				path: "cart",
